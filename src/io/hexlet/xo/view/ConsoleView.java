@@ -7,6 +7,7 @@ import io.hexlet.xo.controller.WinnerController;
 import io.hexlet.xo.model.Field;
 import io.hexlet.xo.model.Figure;
 import io.hexlet.xo.model.Game;
+import io.hexlet.xo.model.Player;
 import io.hexlet.xo.model.exceptions.AlreadyOccupiedException;
 import io.hexlet.xo.model.exceptions.InvalidPointException;
 
@@ -23,7 +24,6 @@ public class ConsoleView {
     public void show(final Game game){
 
         Field field = game.getField();
-        System.out.format("Game name: %s\n", game.getName());
 
         for (int x = 0; x < field.getSize(); x++) {
 
@@ -55,13 +55,16 @@ public class ConsoleView {
 
     }
 
-    public boolean move(final Game game){
+    public boolean move(final Game game, final Player[] players){
 
         final Field field = game.getField();
         final Figure winner = winnerController.getWinner(game.getField());
 
         if(winner != null){
-            System.out.format("Winner is %s", winner);
+            if (winner.equals(Figure.X))
+                System.out.format("Winner is %s", "Player: " + players[0].getName() + " Figure: " + players[0].getFigure());
+            else if (winner.equals(Figure.O))
+                System.out.format("Winner is %s", "Player: " + players[1].getName() + " Figure: " + players[1].getFigure());
             return false;
         }
 
